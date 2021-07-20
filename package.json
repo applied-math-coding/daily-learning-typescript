@@ -1,0 +1,19 @@
+{
+  "name": "each-day-one-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "watch": "nodemon --watch . -e ts --exec npm run build",
+    "build": "tsc --project ./",
+    "start": "npm run build && node ./dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.12",
+    "typescript": "^4.3.5"
+  }
+}
