@@ -1,9 +1,9 @@
 export function caught({ sendToServer }: { sendToServer: boolean }) {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-    const oldValue = descriptor.value;
-    descriptor.value = (a: string) => {
+    const fn = descriptor.value;
+    descriptor.value = function (...args: any[]) {
       try {
-        oldValue(a);
+        fn.call(this, ...args);
       } catch (e) {
         console.log(`Handling error of call to method '${propertyKey}'`);
         console.error(e.message);
