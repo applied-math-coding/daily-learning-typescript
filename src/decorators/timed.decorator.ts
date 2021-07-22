@@ -7,7 +7,7 @@ export function timed(maxTime?: number) {
       const now = Date.now();
       const duration = now - t0;
       if (duration > (maxTime ?? 10)) {
-        console.log('Function call took long:');
+        console.log('Function call took long.');
         console.log(`Property name: ${propertyKey}`);
         console.log(`Arguments:`);
         console.log(args);
