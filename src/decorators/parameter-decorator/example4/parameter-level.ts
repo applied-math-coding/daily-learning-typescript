@@ -1,0 +1,20 @@
+import { Response } from 'express';
+import { body } from './body.decorator';
+import { Data } from './data';
+import { post } from './post.decorator';
+import { response } from './response.decorator';
+
+
+
+export class A {
+
+  @post()
+  targetMethod(@body() data: Data, @response() res: Response) {
+    console.log('the data are:');
+    console.log(data);
+    res.json({ message: 'ok, I got the data' });
+  }
+}
+
+
+
