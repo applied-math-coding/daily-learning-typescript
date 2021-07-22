@@ -6,7 +6,9 @@ export class A {
 
   @timed()
   targetMethod(n: number) {
-    [...Array(n)].map(() => Math.sin(Math.random()));
+    const s = [...Array(n)].map(() => Math.sin(Math.random()))
+      .reduce((prev, curr) => prev + curr, 0);
+    console.log(`The sum is ${s}`);
   }
 
   @timed()
@@ -16,11 +18,21 @@ export class A {
 
   @timed(500)
   longMethod(n: number) {
-    [...Array(n)].map(() => Math.sin(Math.random()));
+    const s = [...Array(n)].map(() => Math.sin(Math.random()))
+      .reduce((prev, curr) => prev + curr, 0);
+    console.log(`The sum is ${s}`);
   }
 
   @caught({ sendToServer: true })
   badMethod() {
     ('' as any).sin();
+  }
+
+  @caught({ sendToServer: false })
+  @timed(500)
+  composedMethod(n: number) {
+    const s = [...Array(n)].map(() => Math.sin(Math.random()))
+      .reduce((prev, curr) => prev + curr, 0);
+    console.log(`The sum is ${s}`);
   }
 }
