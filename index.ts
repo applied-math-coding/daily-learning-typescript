@@ -1,12 +1,20 @@
+import { A } from './src/decorators/class-decorator/example2/class-level';
 import express from 'express';
-import { A } from './src/decorators/parameter-decorator/example4/parameter-level';
+
+function register(...Fns: (new () => any)[]) {
+  Fns.forEach(Fn => {
+    const fn = new Fn();
+    const { _controller: { url: controllerUrl, secure }, _posts: posts } = Fn as any;
+    // if(secure) { app.use(controllerUrl, secureMiddleware); } // add authorization logic to endpoint
+    (posts || []).forEach((e: { name: string, url: string }) => {
+      app.post(`${controllerUrl}/${e.url}`, (req, res) => fn[e.name].call(fn, req, res));
+    });
+  });
+}
 
 const app = express();
 app.use(express.json());
-
-const a = new A();
 app.get('/', (_, res) => res.send('server is ok'));
-app.post('/target-method', (req, res) => (a.targetMethod as any).call(a, req, res));
-app.listen(3000, () => console.log('server listening at http://localhost:3000'));
+register(A);
 
-new A();
+app.listen(3000, () => console.log('server listening at http://localhost:3000'));
